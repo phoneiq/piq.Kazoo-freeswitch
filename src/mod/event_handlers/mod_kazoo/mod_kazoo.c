@@ -43,6 +43,7 @@ SWITCH_MODULE_RUNTIME_FUNCTION(mod_kazoo_runtime);
 SWITCH_MODULE_DEFINITION(mod_kazoo, mod_kazoo_load, mod_kazoo_shutdown, mod_kazoo_runtime);
 
 SWITCH_DECLARE_GLOBAL_STRING_FUNC(set_pref_ip, kazoo_globals.ip);
+SWITCH_DECLARE_GLOBAL_STRING_FUNC(set_pref_advertise_ip, kazoo_globals.advertise_ip);
 SWITCH_DECLARE_GLOBAL_STRING_FUNC(set_pref_ei_cookie, kazoo_globals.ei_cookie);
 SWITCH_DECLARE_GLOBAL_STRING_FUNC(set_pref_ei_nodename, kazoo_globals.ei_nodename);
 SWITCH_DECLARE_GLOBAL_STRING_FUNC(set_pref_kazoo_var_prefix, kazoo_globals.kazoo_var_prefix);
@@ -363,6 +364,9 @@ static switch_status_t config(void) {
 				if (!strcmp(var, "listen-ip")) {
 					switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_INFO, "Set bind ip address: %s\n", val);
 					set_pref_ip(val);
+				} else if (!strcmp(var, "advertise-ip")) {
+					switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_INFO, "Set advertise ip address: %s\n", val);
+					set_pref_advertise_ip(val);
 				} else if (!strcmp(var, "listen-port")) {
 					switch_log_printf(SWITCH_CHANNEL_LOG, SWITCH_LOG_INFO, "Set bind port: %s\n", val);
 					kazoo_globals.port = atoi(val);

@@ -908,7 +908,11 @@ static switch_status_t handle_request_event(ei_node_t *ei_node, erlang_pid *pid,
 		ei_x_encode_atom(rbuf, "ok");
 
 		ei_x_encode_tuple_header(rbuf, 2);
-		ei_x_encode_string(rbuf, ei_node->local_ip);
+		if (!zstr(kazoo_globals.advertise_ip)) {
+			ei_x_encode_string(rbuf, kazoo_globals.advertise_ip);
+		} else {
+			ei_x_encode_string(rbuf, ei_node->local_ip);
+		}
 		ei_x_encode_ulong(rbuf, get_stream_port(event_stream));
 	}
 
